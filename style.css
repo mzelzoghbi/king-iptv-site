@@ -111,3 +111,18 @@ th, td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid v
          font-size: 13px; line-height: 18px; vertical-align: top; }
 th { color: var(--text); font-weight: 600; }
 td { color: var(--text-secondary); }
+
+img.mark { display: block; }
+
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin: 24px 0 0; max-width: none; }
+.button {
+  display: inline-block;
+  background: var(--accent); color: var(--base);
+  font-weight: 600; font-size: 15px; line-height: 20px;
+  border-radius: var(--radius-control); padding: 12px 18px;
+}
+.button:hover { text-decoration: none; filter: brightness(1.08); }
+.cta .note { margin: 0; }
+
+.faq h3 { margin: 24px 0 6px; font-size: 15px; }
+.faq p { margin: 0; }
