@@ -3,8 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>King IPTV Player</title>
-<meta name="description" content="A calm, ad-free IPTV player for iPhone and iPad. You supply the playlist; the app just plays it well.">
+<title>King IPTV Player — IPTV player for M3U and Xtream Codes on Android</title>
+<meta name="description" content="King IPTV Player is a free, ad-free IPTV player for Android. Add your own M3U playlist or Xtream Codes login and watch live TV with an EPG guide, films and series. It includes no channels.">
+<link rel="canonical" href="https://kingiptv.zaplatform.com/">
+<meta name="theme-color" content="#0B0C0E">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="King IPTV Player">
+<meta property="og:title" content="King IPTV Player — IPTV player for M3U and Xtream Codes">
+<meta property="og:description" content="A calm, ad-free IPTV player for Android. You supply the playlist; the app plays it well.">
+<meta property="og:url" content="https://kingiptv.zaplatform.com/">
+<meta property="og:image" content="https://kingiptv.zaplatform.com/og.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MobileApplication",
+      "@id": "https://kingiptv.zaplatform.com/#app",
+      "name": "King IPTV Player",
+      "alternateName": "King IPTV",
+      "description": "An ad-free IPTV player for Android that plays your own M3U / M3U8 playlist or Xtream Codes login, with live TV, an EPG guide, films and series. It hosts and provides no content.",
+      "applicationCategory": "MultimediaApplication",
+      "applicationSubCategory": "IPTV player",
+      "operatingSystem": "Android 7.0 or later",
+      "url": "https://kingiptv.zaplatform.com/",
+      "downloadUrl": "https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv",
+      "installUrl": "https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv",
+      "image": "https://kingiptv.zaplatform.com/icon.png",
+      "screenshot": "https://kingiptv.zaplatform.com/og.png",
+      "featureList": [
+        "Xtream Codes API login",
+        "M3U and M3U8 playlists by link or file",
+        "Multiple playlist sources",
+        "Live TV with now and next from the provider EPG (XMLTV)",
+        "Films and series with resume",
+        "Category picker with channel counts",
+        "Search across the whole playlist",
+        "Favourites per source",
+        "Picture-in-picture",
+        "Subtitle and audio track selection",
+        "Automatic fallback from ExoPlayer to libVLC",
+        "Stream info panel: resolution, codecs, bitrate, buffer, dropped frames"
+      ],
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "publisher": { "@id": "https://kingiptv.zaplatform.com/#org" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://kingiptv.zaplatform.com/#org",
+      "name": "ZaPlatform",
+      "url": "https://zaplatform.com/",
+      "email": "support@zaplatform.com"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Does King IPTV Player include any channels?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. King IPTV Player is a player only. It hosts and provides no content, and shows nothing until you add a playlist from your own IPTV provider." } },
+        { "@type": "Question", "name": "What playlist formats does King IPTV Player support?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Xtream Codes logins (server URL, username and password) and M3U or M3U8 playlists, either as a link or as a file. You can keep several sources and switch between them." } },
+        { "@type": "Question", "name": "Does King IPTV Player have a TV guide (EPG)?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. It reads your provider's EPG (XMLTV) and shows what is on now and next for each live channel." } },
+        { "@type": "Question", "name": "Is King IPTV Player free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is free on Google Play, with no ads, no subscription and no in-app purchases." } },
+        { "@type": "Question", "name": "Which devices does King IPTV Player run on?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Android phones and tablets running Android 7.0 or later. An iPhone and iPad version is coming." } },
+        { "@type": "Question", "name": "Does King IPTV Player collect my data?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Your provider password is encrypted on the device with an Android keystore key and is sent only to the server you entered. There is no account, no analytics, no tracking and no server of ours." } },
+        { "@type": "Question", "name": "Why won't a channel play in King IPTV Player?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The app first tries ExoPlayer and switches to libVLC automatically if a stream fails. If it still won't play, open Stream info in the player: it shows what the server actually sent, which usually tells you whether the problem is the app, your network or the provider." } }
+      ]
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -14,11 +94,16 @@
 <div class="wrap">
 
   <header>
-    <div class="mark">K</div>
+    <img class="mark" src="icon.png" width="56" height="56" alt="King IPTV Player icon">
     <h1>King IPTV Player</h1>
     <p class="lead">
-      Your subscription, finally in a player that gets out of the way.
-      No ads, no upsells, no account to create.
+      An IPTV player for Android that plays your own M3U playlist or Xtream
+      Codes login. Live TV with a guide, films and series, and no ads, upsells
+      or account to create.
+    </p>
+    <p class="cta">
+      <a class="button" href="https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv">Get it on Google Play</a>
+      <span class="note">Free · Android 7.0+ · iPhone and iPad coming</span>
     </p>
   </header>
 
@@ -26,8 +111,8 @@
     <span class="pill">Important</span>
     <p style="margin-top:12px">
       <strong>King IPTV Player hosts and provides no content.</strong>
-      It is an empty player. You supply your own playlist — an Xtream Codes
-      login or an M3U link — from a service you already pay for. The app has
+      It is an empty player. You supply your own playlist, an Xtream Codes
+      login or an M3U link, from a service you already pay for. The app has
       no channels, no catalogue and nothing to watch until you add one.
     </p>
   </div>
@@ -37,8 +122,8 @@
   <div class="features">
     <div class="feature">
       <h3>Your playlist, your way</h3>
-      <p>Xtream Codes credentials or an M3U link or file. Add several sources
-         and switch between them in one tap.</p>
+      <p>Xtream Codes credentials or an M3U / M3U8 link or file. Add several
+         sources and switch between them in one tap.</p>
     </div>
     <div class="feature">
       <h3>Built for long lists</h3>
@@ -46,13 +131,23 @@
          scannable, with a category picker that never truncates a name.</p>
     </div>
     <div class="feature">
-      <h3>Live, films and series</h3>
-      <p>Live channels with now-playing information, films with plot and cast,
-         series with seasons and episodes.</p>
+      <h3>Live TV with a guide</h3>
+      <p>Live channels show what's on now and next from your provider's EPG.
+         Favourites are kept per source.</p>
+    </div>
+    <div class="feature">
+      <h3>Films and series</h3>
+      <p>Films with plot and cast, series with seasons and episodes, and
+         resume where you left off.</p>
+    </div>
+    <div class="feature">
+      <h3>More channels play</h3>
+      <p>ExoPlayer first, libVLC automatically when a stream defeats it.
+         Picture-in-picture, subtitle and audio track choice.</p>
     </div>
     <div class="feature">
       <h3>Honest about the stream</h3>
-      <p>Resolution, codecs, bitrate, buffer health and dropped frames — read
+      <p>Resolution, codecs, bitrate, buffer health and dropped frames, read
          from the player, not invented.</p>
     </div>
     <div class="feature">
@@ -62,19 +157,57 @@
     </div>
     <div class="feature">
       <h3>Stays on your device</h3>
-      <p>Your credentials go in the iOS keychain. Nothing is sent to us —
-         there is no "us" to send it to.</p>
+      <p>Your password is encrypted with an Android keystore key. Nothing is
+         sent to us; there is no "us" to send it to.</p>
     </div>
+  </div>
+
+  <h2>Questions</h2>
+
+  <div class="faq">
+    <h3>Does King IPTV Player include any channels?</h3>
+    <p>No. It is a player only. It hosts and provides no content, and shows
+       nothing until you add a playlist from your own IPTV provider.</p>
+
+    <h3>What playlist formats does it support?</h3>
+    <p>Xtream Codes logins (server URL, username and password) and M3U or M3U8
+       playlists, either as a link or as a file. You can keep several sources
+       and switch between them.</p>
+
+    <h3>Does it have a TV guide (EPG)?</h3>
+    <p>Yes. It reads your provider's EPG (XMLTV) and shows what is on now and
+       next for each live channel.</p>
+
+    <h3>Is it free?</h3>
+    <p>Yes. It is free on Google Play, with no ads, no subscription and no
+       in-app purchases.</p>
+
+    <h3>Which devices does it run on?</h3>
+    <p>Android phones and tablets running Android 7.0 or later. An iPhone and
+       iPad version is coming.</p>
+
+    <h3>Does it collect my data?</h3>
+    <p>No. Your provider password is encrypted on the device and is sent only
+       to the server you entered. There is no account, no analytics, no
+       tracking and no server of ours. See the <a href="privacy/">privacy
+       policy</a>.</p>
+
+    <h3>Why won't a channel play?</h3>
+    <p>The app tries ExoPlayer first and switches to libVLC automatically if a
+       stream fails. If it still won't play, open <strong>Stream info</strong>
+       in the player: it shows what the server actually sent, which usually
+       tells you whether the problem is the app, your network or the
+       provider.</p>
   </div>
 
   <h2>Requirements</h2>
   <ul>
-    <li>iPhone or iPad running iOS 17 or later</li>
+    <li>An Android phone or tablet running Android 7.0 or later</li>
     <li>An active subscription with an IPTV provider, or your own M3U playlist</li>
   </ul>
   <p class="note">
     King IPTV Player is not affiliated with any provider and does not sell,
-    resell or recommend one.
+    resell or recommend one. Only add playlists you have the right to watch.
   </p>
 
   <h2>Support</h2>
@@ -82,16 +215,12 @@
     Questions, bugs or feedback:
     <a href="mailto:support@zaplatform.com">support@zaplatform.com</a>.
   </p>
-  <p>
-    If a channel will not play, open the player's <strong>Stream info</strong>
-    panel — it reports what the server actually sent, which is usually enough
-    to tell whether the problem is the app, the network or the provider.
-  </p>
 
   <hr>
 
   <footer>
     <p style="color:inherit">
+      <a href="https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv">Google Play</a> ·
       <a href="privacy/">Privacy policy</a> ·
       <a href="mailto:support@zaplatform.com">Support</a>
     </p>
