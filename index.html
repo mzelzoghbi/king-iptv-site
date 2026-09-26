@@ -41,7 +41,7 @@
       "downloadUrl": "https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv",
       "installUrl": "https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv",
       "image": "https://kingiptv.zaplatform.com/icon.png",
-      "screenshot": "https://kingiptv.zaplatform.com/og.png",
+      "screenshot": ["https://kingiptv.zaplatform.com/assets/shots/android/home.webp", "https://kingiptv.zaplatform.com/assets/shots/android/livetv.webp", "https://kingiptv.zaplatform.com/assets/shots/android/categories.webp", "https://kingiptv.zaplatform.com/assets/shots/android/movies.webp"],
       "featureList": [
         "Xtream Codes API login",
         "M3U and M3U8 playlists by link or file",
@@ -73,7 +73,7 @@
       "downloadUrl": "https://apps.apple.com/gb/app/king-iptv-player/id6807144978",
       "installUrl": "https://apps.apple.com/gb/app/king-iptv-player/id6807144978",
       "image": "https://kingiptv.zaplatform.com/icon.png",
-      "screenshot": "https://kingiptv.zaplatform.com/og.png",
+      "screenshot": ["https://kingiptv.zaplatform.com/assets/shots/ios/home.webp", "https://kingiptv.zaplatform.com/assets/shots/ios/livetv.webp", "https://kingiptv.zaplatform.com/assets/shots/ios/categories.webp", "https://kingiptv.zaplatform.com/assets/shots/ios/movies.webp"],
       "featureList": [
         "Xtream Codes API login",
         "M3U and M3U8 playlists by link or file",
@@ -120,151 +120,634 @@
   ]
 }
 </script>
-
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css">
+<link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Self-hosted fonts (fonts/, SIL OFL) */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+  src: url(fonts/inter-latin.woff2) format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 500; font-display: swap;
+  src: url(fonts/jetbrains-mono-latin.woff2) format("woff2"); }
+/* Tokens — same values as the app's Tokens.swift / Tokens.kt */
+:root {
+  color-scheme: dark;
+  --base: #0B0C0E;
+  --surface: #15171A;
+  --raised: #1E2126;
+  --accent: #FFB020;
+  --accent-pressed: #D99518;
+  --on-accent: #0B0C0E;
+  --text: #FFFFFF;
+  --text-2: rgba(255,255,255,.64);
+  --text-3: rgba(255,255,255,.44);
+  --hairline: rgba(255,255,255,.08);
+  --hairline-2: rgba(255,255,255,.14);
+  --tint-12: rgba(255,176,32,.12);
+  --tint-06: rgba(255,176,32,.06);
+
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --r-sm: 8px; --r-md: 12px; --r-lg: 20px;
+  --gutter: 16px;
+  --max: 1160px;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+@media (min-width: 720px) { :root { --gutter: 32px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--base); color: var(--text);
+  font: 400 16px/1.55 var(--sans);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.mono { font-family: var(--mono); }
+.eyebrow {
+  font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-3);
+}
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.02em; }
+p { margin: 0; }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(11,12,14,.78);
+  backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px);
+  border-bottom: 1px solid var(--hairline);
+}
+.nav .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; }
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.nav-links { display: none; gap: 24px; margin-left: auto; font-size: 14px; }
+.nav-links a { text-decoration: none; color: var(--text-2); transition: color .15s; }
+.nav-links a:hover { color: var(--text); }
+.nav .btn { margin-left: auto; }
+@media (min-width: 860px) { .nav-links { display: flex; } .nav .btn { margin-left: 0; } }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px;
+  padding: 0 18px; border-radius: var(--r-md); text-decoration: none;
+  font: 600 15px/1 var(--sans); cursor: pointer; border: 0;
+  transition: background-color .15s, transform .15s var(--ease);
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { background: var(--accent-pressed); }
+.btn-sm { min-height: 38px; padding: 0 14px; font-size: 14px; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.store {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 20px 0 16px;
+  border-radius: var(--r-md); text-decoration: none; transition: background-color .15s, transform .15s var(--ease);
+}
+.store:active { transform: scale(.97); }
+.store svg { width: 24px; height: 24px; flex: none; }
+.store small { display: block; font: 500 11px/1.2 var(--sans); opacity: .72; }
+.store strong { display: block; font: 600 17px/1.2 var(--sans); }
+.store-play { background: var(--accent); color: var(--on-accent); }
+.store-play:hover { background: var(--accent-pressed); }
+.store-apple { border: 1px solid var(--hairline-2); color: var(--text); background: var(--surface); }
+.store-apple:hover { background: var(--raised); }
+
+/* ---------- Device frames ---------- */
+.device {
+  position: relative; border-radius: 15.5% / 7.2%; padding: 3.2%;
+  background: linear-gradient(145deg, #2a2d33, #121418 55%, #23262b);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.07) inset, 0 40px 80px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(0,0,0,.6);
+}
+.device img { width: 100%; border-radius: 13% / 6%; background: var(--surface); }
+.device.android { border-radius: 11% / 5%; padding: 2.6%; }
+.device.android img { border-radius: 9% / 4.1%; }
+.device-label {
+  display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px;
+  font: 500 12px/1 var(--mono); color: var(--text-3); letter-spacing: .04em;
+}
+.device-label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; padding: 56px 0 72px; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: -20% -10% auto 30%; height: 90%;
+  background: radial-gradient(closest-side, rgba(255,176,32,.13), transparent 70%);
+  pointer-events: none;
+}
+.hero .wrap { position: relative; display: grid; gap: 56px; align-items: center; }
+@media (min-width: 960px) { .hero { padding: 88px 0 104px; } .hero .wrap { grid-template-columns: 1.02fr 1fr; gap: 40px; } }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px;
+  border-radius: 8px; background: var(--tint-12); color: var(--accent);
+  font: 500 12px/1 var(--mono); letter-spacing: .02em;
+}
+.hero h1 { font-size: clamp(40px, 7vw, 68px); line-height: 1.02; letter-spacing: -.035em; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lead { margin-top: 20px; max-width: 34em; font-size: 18px; color: var(--text-2); }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero .fine { margin-top: 16px; font-size: 13px; color: var(--text-3); }
+
+.duo { display: flex; justify-content: center; align-items: flex-start; gap: 4%; }
+.duo figure { margin: 0; width: min(46%, 260px); }
+.duo figure:last-child { margin-top: 56px; }
+
+/* ---------- Honesty band ---------- */
+.band { border-block: 1px solid var(--hairline); background: var(--surface); }
+.band .wrap { display: grid; gap: 16px; padding-block: 28px; align-items: center; }
+@media (min-width: 860px) { .band .wrap { grid-template-columns: auto 1fr; gap: 32px; } }
+.band .tag {
+  justify-self: start; display: inline-flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px;
+  border: 1px solid rgba(255,176,32,.4); border-radius: 8px; color: var(--accent); font: 500 12px/1 var(--mono);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.band p { color: var(--text-2); max-width: 70em; }
+.band strong { color: var(--text); font-weight: 600; }
+
+/* ---------- Sections ---------- */
+section.block { padding: 88px 0; }
+.head { display: grid; gap: 14px; max-width: 40em; margin-bottom: 40px; }
+.head h2 { font-size: clamp(30px, 4.4vw, 44px); line-height: 1.08; }
+.head p { color: var(--text-2); font-size: 17px; }
+
+/* Screen tour */
+.tour-top { display: flex; flex-wrap: wrap; gap: 20px; align-items: end; justify-content: space-between; margin-bottom: 32px; }
+.tour-top .head { margin-bottom: 0; }
+.seg {
+  display: inline-flex; padding: 3px; gap: 2px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--hairline);
+}
+.seg button {
+  min-width: 112px; min-height: 40px; padding: 0 16px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--text-2); font: 600 14px/1 var(--sans); cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background-color .2s var(--ease), color .2s;
+}
+.seg button svg { width: 16px; height: 16px; }
+.seg button[aria-selected="true"] { background: var(--accent); color: var(--on-accent); }
+.seg button:not([aria-selected="true"]):hover { color: var(--text); }
+
+.strip {
+  display: grid; grid-auto-flow: column; grid-auto-columns: min(60%, 220px); gap: 20px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+  padding: 4px var(--gutter) 20px;
+  margin: 0 calc(var(--gutter) * -1); scrollbar-width: thin; scrollbar-color: var(--raised) transparent;
+}
+@media (min-width: 1100px) { .strip { grid-auto-columns: 1fr; overflow: visible; padding-inline: 0; margin: 0; } }
+.shot { margin: 0; scroll-snap-align: start; }
+.shot .device { transition: opacity .25s var(--ease); }
+.shot figcaption { margin-top: 18px; }
+.shot h3 { font-size: 16px; }
+.shot p { margin-top: 6px; font-size: 14px; color: var(--text-2); }
+.shot .n { font: 500 12px/1 var(--mono); color: var(--accent); margin-bottom: 8px; display: block; }
+.strip.is-swapping .device { opacity: 0; }
+
+/* Native on each */
+.native { background: linear-gradient(180deg, var(--base), var(--surface) 40%, var(--base)); }
+.compare { display: grid; gap: 40px; align-items: start; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+@media (min-width: 900px) { .compare { grid-template-columns: 1fr minmax(0, 640px); gap: 48px; } .pair { gap: 40px; } }
+.compare .device { max-width: 300px; margin: 0 auto; }
+.pair .device-label { font-size: 11px; }
+.notes { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.notes li { padding: 18px 0; border-top: 1px solid var(--hairline); display: grid; gap: 4px; }
+.notes li:last-child { border-bottom: 1px solid var(--hairline); }
+.notes b { font-weight: 600; }
+.notes span { color: var(--text-2); font-size: 15px; }
+.notes .mono { font-size: 12px; color: var(--text-3); letter-spacing: .04em; }
+
+/* Features */
+.features { display: grid; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--r-lg); overflow: hidden; }
+@media (min-width: 640px) { .features { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .features { grid-template-columns: repeat(3, 1fr); } }
+.feature { background: var(--base); padding: 28px; display: grid; gap: 10px; align-content: start; }
+.feature .ic {
+  width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--tint-12); color: var(--accent); margin-bottom: 6px;
+}
+.feature .ic svg { width: 20px; height: 20px; }
+.feature h3 { font-size: 17px; }
+.feature p { color: var(--text-2); font-size: 15px; }
+
+/* Stream info */
+.info { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 900px) { .info { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.panel {
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  padding: 8px 24px; font-family: var(--mono); font-size: 14px;
+}
+.panel .row { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--hairline); }
+.panel .row:last-child { border-bottom: 0; }
+.panel .k { color: var(--text-3); }
+.panel .v { color: var(--text); text-align: right; }
+.panel .top { display: flex; justify-content: space-between; align-items: center; padding: 16px 0 12px; border-bottom: 1px solid var(--hairline); }
+.panel .top b { font: 600 15px/1 var(--sans); }
+.live { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 12px; }
+.live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.bar { height: 6px; width: 120px; border-radius: 3px; background: var(--raised); overflow: hidden; display: inline-block; vertical-align: middle; margin-left: 10px; }
+.bar i { display: block; height: 100%; width: 78%; background: var(--accent); border-radius: 3px; }
+.caption { margin-top: 12px; font-size: 13px; color: var(--text-3); }
+
+/* FAQ */
+.faq { display: grid; gap: 12px; max-width: 820px; }
+.faq details { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-md); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 18px 56px 18px 20px; position: relative;
+  font-weight: 600; min-height: 44px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: ""; position: absolute; right: 22px; top: 50%; width: 10px; height: 10px; margin-top: -7px;
+  border-right: 2px solid var(--text-3); border-bottom: 2px solid var(--text-3); transform: rotate(45deg);
+  transition: transform .2s var(--ease);
+}
+.faq details[open] summary::after { transform: rotate(225deg); margin-top: -2px; }
+.faq details p { padding: 0 20px 20px; color: var(--text-2); }
+.faq a { color: var(--accent); }
+
+/* Final CTA */
+.final { text-align: center; padding: 96px 0; border-top: 1px solid var(--hairline); position: relative; overflow: hidden; }
+.final::before {
+  content: ""; position: absolute; left: 50%; bottom: -60%; width: 900px; height: 600px; transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(255,176,32,.14), transparent 70%); pointer-events: none;
+}
+.final .wrap { position: relative; }
+.final img.icon { width: 88px; height: 88px; border-radius: 22px; margin: 0 auto 28px; box-shadow: 0 20px 60px -20px rgba(255,176,32,.5); }
+.final h2 { font-size: clamp(32px, 5vw, 52px); line-height: 1.05; }
+.final p { color: var(--text-2); margin: 16px auto 0; max-width: 32em; }
+.final .ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
+.req { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: center; font: 400 13px/1.4 var(--mono); color: var(--text-3); }
+
+footer { border-top: 1px solid var(--hairline); padding: 32px 0 48px; font-size: 14px; color: var(--text-3); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 32px; justify-content: space-between; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+footer a { color: var(--text-2); text-decoration: none; }
+footer a:hover { color: var(--text); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; scroll-behavior: auto !important; }
+}
+</style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <img class="mark" src="icon.png" width="56" height="56" alt="King IPTV Player icon">
-    <h1>King IPTV Player</h1>
-    <p class="lead">
-      An IPTV player for Android, iPhone and iPad that plays your own M3U
-      playlist or Xtream Codes login. Live TV with a guide, films and series,
-      and no ads, upsells or account to create.
-    </p>
-    <p class="cta">
-      <a class="button" href="https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv">Get it on Google Play</a>
-      <a class="button" href="https://apps.apple.com/gb/app/king-iptv-player/id6807144978">Download on the App Store</a>
-      <span class="note">Free · Android 7.0+ · iPhone and iPad with iOS 17+</span>
-    </p>
-  </header>
+<!-- Inline icon sprite (Lucide-style strokes) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M4.6 2.3a1 1 0 0 0-.6.9v17.6a1 1 0 0 0 .6.9l10-9.7-10-9.7Zm11.1 8.6 2.9-2.8-11.5-6.6 8.6 9.4Zm0 2.2-8.6 9.4 11.5-6.6-2.9-2.8Zm3.9-3.8-2.9 1.7 2.9 2.8 1.2-.7c.8-.5.8-1.6 0-2.1l-1.2-1.7Z"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.1 2.5-1.8 3.1-.5 7.6 1.3 10.1.8 1.2 1.8 2.6 3.1 2.5 1.3 0 1.7-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.2-1.2 3-2.5 1-1.4 1.4-2.7 1.4-2.8-.1 0-2.7-1-2.7-4.1ZM14 5.3c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4Z"/></symbol>
+  <symbol id="i-android" viewBox="0 0 24 24"><path fill="currentColor" d="M17.5 9.3 19.2 6.4a.4.4 0 1 0-.7-.4l-1.8 3A10.6 10.6 0 0 0 12 8a10.6 10.6 0 0 0-4.7 1L5.5 6a.4.4 0 0 0-.7.4l1.7 2.9A9.3 9.3 0 0 0 2 16.5h20a9.3 9.3 0 0 0-4.5-7.2ZM7.5 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm9 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="m17 2-5 5-5-5"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+</svg>
 
-  <div class="card">
-    <span class="pill">Important</span>
-    <p style="margin-top:12px">
-      <strong>King IPTV Player hosts and provides no content.</strong>
-      It is an empty player. You supply your own playlist, an Xtream Codes
-      login or an M3U link, from a service you already pay for. The app has
-      no channels, no catalogue and nothing to watch until you add one.
-    </p>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="King IPTV Player, home">
+      <img src="assets/icon.webp" alt="" width="28" height="28">
+      <span>King IPTV Player</span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#screens">Screens</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#download">Get the app</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="chips">
+          <span class="chip">Free</span>
+          <span class="chip">No ads</span>
+          <span class="chip">No account</span>
+        </div>
+        <h1>Your playlist.<br><em>A player that gets out of the way.</em></h1>
+        <p class="lead">
+          Paste an M3U link or your Xtream Codes login and King IPTV Player sorts
+          thousands of channels, films and series into something you can actually browse.
+          On iPhone and Android.
+        </p>
+        <div class="ctas">
+          <a class="store store-play" href="https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv">
+            <svg aria-hidden="true"><use href="#i-play"/></svg>
+            <span><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
+          <a class="store store-apple" href="https://apps.apple.com/app/id6807144978">
+            <svg aria-hidden="true"><use href="#i-apple"/></svg>
+            <span><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+        </div>
+        <p class="fine">Includes no channels. You bring the playlist from a provider you already use.</p>
+      </div>
+
+      <div class="duo">
+        <figure>
+          <div class="device">
+            <img src="assets/shots/ios/home.webp" width="720" height="1565"
+                 alt="King IPTV Player on iPhone: the Home screen with rows of live channels grouped into News, Sport and Movies.">
+          </div>
+          <figcaption class="device-label">iPhone</figcaption>
+        </figure>
+        <figure>
+          <div class="device android">
+            <img src="assets/shots/android/livetv.webp" width="720" height="1606"
+                 alt="King IPTV Player on Android: the Live TV list with a channel search field and a Categories button.">
+          </div>
+          <figcaption class="device-label">Android</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Honesty band -->
+  <div class="band" role="note">
+    <div class="wrap">
+      <span class="tag">Hosts no content</span>
+      <p>
+        <strong>King IPTV Player is an empty player.</strong> It has no channels, no catalogue
+        and nothing to watch until you add your own playlist from a service you already pay for.
+        It is not affiliated with any provider and does not sell, resell or recommend one.
+      </p>
+    </div>
   </div>
 
-  <h2>What it does</h2>
+  <!-- Screen tour -->
+  <section class="block" id="screens" aria-labelledby="screens-h">
+    <div class="wrap">
+      <div class="tour-top">
+        <div class="head">
+          <span class="eyebrow">Real screens · captured from the apps</span>
+          <h2 id="screens-h">Six tabs' worth of calm.</h2>
+          <p>Every screenshot here was taken from the shipping app, running a made-up demo playlist.
+             No mock-ups, no real broadcasters.</p>
+        </div>
+        <div class="seg" role="tablist" aria-label="Platform">
+          <button role="tab" aria-selected="true" aria-controls="strip" data-platform="ios">
+            <svg aria-hidden="true"><use href="#i-apple"/></svg>iPhone
+          </button>
+          <button role="tab" aria-selected="false" aria-controls="strip" data-platform="android">
+            <svg aria-hidden="true"><use href="#i-android"/></svg>Android
+          </button>
+        </div>
+      </div>
 
-  <div class="features">
-    <div class="feature">
-      <h3>Your playlist, your way</h3>
-      <p>Xtream Codes credentials or an M3U / M3U8 link or file. Add several
-         sources and switch between them in one tap.</p>
+      <div class="strip" id="strip" role="tabpanel" tabindex="0" aria-label="App screenshots">
+        <figure class="shot">
+          <div class="device" data-frame><img data-shot="home" src="assets/shots/ios/home.webp" width="720" height="1565" loading="lazy" alt="Home: live channels in horizontal rows by category."></div>
+          <figcaption><span class="n">01</span><h3>Home</h3><p>Your playlist as rows by category: News, Sport, Movies, Kids.</p></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device" data-frame><img data-shot="livetv" src="assets/shots/ios/livetv.webp" width="720" height="1565" loading="lazy" alt="Live TV: a searchable channel list with favourite stars."></div>
+          <figcaption><span class="n">02</span><h3>Live TV</h3><p>Search as you type, star favourites, keep provider prefixes readable.</p></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device" data-frame><img data-shot="categories" src="assets/shots/ios/categories.webp" width="720" height="1565" loading="lazy" alt="Categories: a filterable list of every category with channel counts."></div>
+          <figcaption><span class="n">03</span><h3>Categories</h3><p>Hundreds of groups, filterable, and no name is ever cut off.</p></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device" data-frame><img data-shot="movies" src="assets/shots/ios/movies.webp" width="720" height="1565" loading="lazy" alt="Movies: a poster grid with search and categories."></div>
+          <figcaption><span class="n">04</span><h3>Movies</h3><p>Your provider's film library as a poster grid, with plot and cast.</p></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device" data-frame><img data-shot="series" src="assets/shots/ios/series.webp" width="720" height="1565" loading="lazy" alt="Series: a poster grid of shows with genre labels."></div>
+          <figcaption><span class="n">05</span><h3>Series</h3><p>Shows laid out by season and episode, from the same playlist.</p></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="device" data-frame><img data-shot="settings" src="assets/shots/ios/settings.webp" width="720" height="1565" loading="lazy" alt="Settings: source, server, catalogue counts and a Refresh now action."></div>
+          <figcaption><span class="n">06</span><h3>Settings</h3><p>What was loaded and when, several sources, refresh in one tap.</p></figcaption>
+        </figure>
+      </div>
     </div>
-    <div class="feature">
-      <h3>Built for long lists</h3>
-      <p>Thousands of channels and hundreds of categories stay searchable and
-         scannable, with a category picker that never truncates a name.</p>
+  </section>
+
+  <!-- Native on each -->
+  <section class="block native" aria-labelledby="native-h">
+    <div class="wrap">
+      <div class="compare">
+        <div>
+          <div class="head">
+            <span class="eyebrow">Same player, two platforms</span>
+            <h2 id="native-h">Built natively for each phone.</h2>
+            <p>One design, written twice: SwiftUI on iPhone, Jetpack Compose on Android. Same
+               screens, same behaviour, and each one feels at home on its own platform.</p>
+          </div>
+          <ul class="notes">
+            <li><span class="mono">IPHONE · iOS 17+</span><b>Glass tab bar, native gestures</b><span>AVFoundation plays first; libVLC takes over for streams it refuses.</span></li>
+            <li><span class="mono">ANDROID · 7.0+</span><b>Material navigation, system back</b><span>ExoPlayer plays first, with an automatic libVLC fallback.</span></li>
+            <li><span class="mono">BOTH</span><b>One set of design tokens</b><span>Same colours, type and spacing, so switching phones never feels like switching apps.</span></li>
+          </ul>
+        </div>
+        <div class="pair">
+        <figure style="margin:0">
+          <div class="device"><img src="assets/shots/ios/livetv.webp" width="720" height="1565" loading="lazy" alt="Live TV on iPhone."></div>
+          <figcaption class="device-label">Live TV · iPhone</figcaption>
+        </figure>
+        <figure style="margin:0">
+          <div class="device android"><img src="assets/shots/android/livetv.webp" width="720" height="1606" loading="lazy" alt="Live TV on Android."></div>
+          <figcaption class="device-label">Live TV · Android</figcaption>
+        </figure>
+        </div>
+      </div>
     </div>
-    <div class="feature">
-      <h3>Live TV with a guide</h3>
-      <p>Live channels show what's on now and next from your provider's EPG.
-         Favourites are kept per source.</p>
+  </section>
+
+  <!-- Features -->
+  <section class="block" id="features" aria-labelledby="features-h">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">What it does</span>
+        <h2 id="features-h">Everything a player needs. Nothing it doesn't.</h2>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <span class="ic"><svg aria-hidden="true"><use href="#i-link"/></svg></span>
+          <h3>Your playlist, your way</h3>
+          <p>Xtream Codes logins, or M3U / M3U8 as a link or a file. Keep several sources and switch in one tap.</p>
+        </article>
+        <article class="feature">
+          <span class="ic"><svg aria-hidden="true"><use href="#i-list"/></svg></span>
+          <h3>Built for long lists</h3>
+          <p>Thousands of channels and hundreds of categories stay fast to search and easy to scan.</p>
+        </article>
+        <article class="feature">
+          <span class="ic"><svg aria-hidden="true"><use href="#i-tv"/></svg></span>
+          <h3>Live TV with a guide</h3>
+          <p>Reads your provider's EPG (XMLTV) to show what's on now and next for every channel.</p>
+        </article>
+        <article class="feature">
+          <span class="ic"><svg aria-hidden="true"><use href="#i-film"/></svg></span>
+          <h3>Films and series</h3>
+          <p>Films with plot and cast, series with seasons and episodes, all from the same playlist.</p>
+        </article>
+        <article class="feature">
+          <span class="ic"><svg aria-hidden="true"><use href="#i-moon"/></svg></span>
+          <h3>Quiet by design</h3>
+          <p>Dark, precise, legible. No banner ads, no "Pro" badges, no trial counters. Nothing to buy.</p>
+        </article>
+        <article class="feature">
+          <span class="ic"><svg aria-hidden="true"><use href="#i-lock"/></svg></span>
+          <h3>Stays on your device</h3>
+          <p>Your password is encrypted on the phone and only ever sent to the server you typed in.</p>
+        </article>
+      </div>
     </div>
-    <div class="feature">
-      <h3>Films and series</h3>
-      <p>Films with plot and cast, series with seasons and episodes, and
-         resume where you left off.</p>
+  </section>
+
+  <!-- Stream info -->
+  <section class="block" aria-labelledby="info-h" style="padding-top:0">
+    <div class="wrap info">
+      <div class="head" style="margin:0">
+        <span class="eyebrow">Stream info</span>
+        <h2 id="info-h">Honest about the stream.</h2>
+        <p>When a channel stutters, open Stream info. It reports what the server actually sent,
+           read straight from the player, which is usually enough to tell whether the problem
+           is the app, your network or the provider.</p>
+      </div>
+      <div>
+        <div class="panel" aria-label="Example of the Stream info panel">
+          <div class="top"><b>Stream info</b><span class="live">LIVE</span></div>
+          <div class="row"><span class="k">Resolution</span><span class="v">1920 × 1080</span></div>
+          <div class="row"><span class="k">Video</span><span class="v">H.264 · 50 fps</span></div>
+          <div class="row"><span class="k">Audio</span><span class="v">AAC · stereo</span></div>
+          <div class="row"><span class="k">Bitrate</span><span class="v">6.4 Mbps</span></div>
+          <div class="row"><span class="k">Buffer</span><span class="v">7.8 s<span class="bar"><i></i></span></span></div>
+          <div class="row"><span class="k">Dropped frames</span><span class="v">0</span></div>
+          <div class="row"><span class="k">Engine</span><span class="v">AVFoundation</span></div>
+        </div>
+        <p class="caption">Illustrative values. The panel shows your stream's real ones.</p>
+      </div>
     </div>
-    <div class="feature">
-      <h3>More channels play</h3>
-      <p>The system player first, libVLC automatically when a stream defeats
-         it. Picture-in-picture, subtitle and audio track choice.</p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="block" id="faq" aria-labelledby="faq-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Questions</span>
+        <h2 id="faq-h">Before you download.</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>Does King IPTV Player include any channels?</summary>
+          <p>No. It is a player only. It hosts and provides no content, and shows nothing until
+             you add a playlist from your own IPTV provider.</p>
+        </details>
+        <details>
+          <summary>What playlist formats does it support?</summary>
+          <p>Xtream Codes logins (server URL, username and password) and M3U or M3U8 playlists,
+             either as a link or as a file. You can keep several sources and switch between them.</p>
+        </details>
+        <details>
+          <summary>Does it have a TV guide (EPG)?</summary>
+          <p>Yes. It reads your provider's EPG (XMLTV) and shows what is on now and next for each live channel.</p>
+        </details>
+        <details>
+          <summary>Is it free?</summary>
+          <p>Yes. It is free on Google Play and the App Store, with no ads, no subscription and no in-app purchases.</p>
+        </details>
+        <details>
+          <summary>Which devices does it run on?</summary>
+          <p>Android phones and tablets running Android 7.0 or later, and iPhones and iPads
+             running iOS 17 or later.</p>
+        </details>
+        <details>
+          <summary>Does it collect my data?</summary>
+          <p>No. Your provider password is encrypted on the device and sent only to the server you
+             entered. There is no account and no server of ours. See the <a href="privacy/">privacy policy</a>.</p>
+        </details>
+        <details>
+          <summary>Why won't a channel play?</summary>
+          <p>The app tries the platform player first and switches to libVLC automatically if a stream
+             fails. If it still won't play, open <strong>Stream info</strong> in the player to see what
+             the server actually sent.</p>
+        </details>
+      </div>
     </div>
-    <div class="feature">
-      <h3>Honest about the stream</h3>
-      <p>Resolution, codecs, bitrate, buffer health and dropped frames, read
-         from the player, not invented.</p>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final" id="download" aria-labelledby="final-h">
+    <div class="wrap">
+      <img class="icon" src="assets/icon.webp" alt="" width="88" height="88" loading="lazy">
+      <h2 id="final-h">Bring your playlist.</h2>
+      <p>Free, with no ads and no account. Paste one link and start watching.</p>
+      <div class="ctas">
+        <a class="store store-play" href="https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv">
+          <svg aria-hidden="true"><use href="#i-play"/></svg>
+          <span><small>Get it on</small><strong>Google Play</strong></span>
+        </a>
+        <a class="store store-apple" href="https://apps.apple.com/app/id6807144978">
+          <svg aria-hidden="true"><use href="#i-apple"/></svg>
+          <span><small>Download on the</small><strong>App Store</strong></span>
+        </a>
+      </div>
+      <div class="req">
+        <span>Android 7.0+</span><span>iOS 17+</span><span>Your own M3U or Xtream Codes source</span>
+      </div>
     </div>
-    <div class="feature">
-      <h3>Quiet by design</h3>
-      <p>Dark, precise and legible. No banner ads, no "Pro" badges, no trial
-         counters, no monetisation surface at all.</p>
-    </div>
-    <div class="feature">
-      <h3>Stays on your device</h3>
-      <p>Your password is encrypted with an Android keystore key or the iOS
-         keychain. Nothing is sent to us; there is no "us" to send it to.</p>
-    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 ZaPlatform · King IPTV Player</span>
+    <nav aria-label="Footer">
+      <a href="privacy/">Privacy policy</a>
+      <a href="mailto:support@zaplatform.com">support@zaplatform.com</a>
+      <a href="https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv">Google Play</a>
+      <a href="https://apps.apple.com/app/id6807144978">App Store</a>
+    </nav>
   </div>
+</footer>
 
-  <h2>Questions</h2>
+<script>
+// Platform switch for the screen tour: swaps every screenshot and frame shape.
+(() => {
+  const tabs = document.querySelectorAll('.seg [role="tab"]');
+  const strip = document.getElementById('strip');
+  const dims = { ios: [720, 1565], android: [720, 1606] };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  <div class="faq">
-    <h3>Does King IPTV Player include any channels?</h3>
-    <p>No. King IPTV Player is a player only. It hosts and provides no
-       content, and shows nothing until you add a playlist from your own IPTV
-       provider.</p>
+  function show(platform) {
+    tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.platform === platform)));
+    const apply = () => {
+      strip.querySelectorAll('[data-shot]').forEach(img => {
+        img.src = `assets/shots/${platform}/${img.dataset.shot}.webp`;
+        [img.width, img.height] = dims[platform];
+      });
+      strip.querySelectorAll('[data-frame]').forEach(f => f.classList.toggle('android', platform === 'android'));
+      strip.classList.remove('is-swapping');
+    };
+    if (reduce) return apply();
+    strip.classList.add('is-swapping');
+    setTimeout(apply, 180);
+  }
 
-    <h3>What playlist formats does it support?</h3>
-    <p>Xtream Codes logins (server URL, username and password) and M3U or M3U8
-       playlists, either as a link or as a file. You can keep several sources
-       and switch between them.</p>
-
-    <h3>Does it have a TV guide (EPG)?</h3>
-    <p>Yes. It reads your provider's EPG (XMLTV) and shows what is on now and
-       next for each live channel.</p>
-
-    <h3>Is it free?</h3>
-    <p>Yes. It is free on Google Play and the App Store, with no ads, no
-       subscription and no in-app purchases.</p>
-
-    <h3>Which devices does it run on?</h3>
-    <p>Android phones and tablets running Android 7.0 or later, and iPhones and
-       iPads running iOS 17 or later.</p>
-
-    <h3>Does it collect my data?</h3>
-    <p>No. Your provider password is encrypted on the device, with an Android
-       keystore key or the iOS keychain, and is sent only to the server you
-       entered. There is no account, no analytics, no tracking and no server
-       of ours. See the <a href="privacy/">privacy policy</a>.</p>
-
-    <h3>Why won't a channel play?</h3>
-    <p>The app first tries the system player (ExoPlayer on Android,
-       AVFoundation on iOS) and switches to libVLC automatically if a stream
-       fails. If it still won't play, open <strong>Stream info</strong> in the
-       player: it shows what the server actually sent, which usually tells you
-       whether the problem is the app, your network or the provider.</p>
-  </div>
-
-  <h2>Requirements</h2>
-  <ul>
-    <li>Android: a phone or tablet running Android 7.0 or later</li>
-    <li>iOS: an iPhone or iPad running iOS 17 or later</li>
-    <li>An active subscription with an IPTV provider, or your own M3U playlist</li>
-  </ul>
-  <p class="note">
-    King IPTV Player is not affiliated with any provider and does not sell,
-    resell or recommend one. Only add playlists you have the right to watch.
-  </p>
-
-  <h2>Support</h2>
-  <p>
-    Questions, bugs or feedback:
-    <a href="mailto:support@zaplatform.com">support@zaplatform.com</a>.
-  </p>
-
-  <hr>
-
-  <footer>
-    <p style="color:inherit">
-      <a href="https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv">Google Play</a> ·
-      <a href="https://apps.apple.com/gb/app/king-iptv-player/id6807144978">App Store</a> ·
-      <a href="privacy/">Privacy policy</a> ·
-      <a href="mailto:support@zaplatform.com">Support</a>
-    </p>
-    <p style="color:inherit">© 2026 ZaPlatform. King IPTV Player.</p>
-  </footer>
-
-</div>
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t.dataset.platform));
+    t.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const next = tabs[(i + 1) % tabs.length];
+      next.focus(); show(next.dataset.platform);
+    });
+  });
+  // Warm the other platform's images so the swap doesn't flash.
+  ['home','livetv','categories','movies','series','settings'].forEach(n => { new Image().src = `assets/shots/android/${n}.webp`; });
+})();
+</script>
 </body>
 </html>
