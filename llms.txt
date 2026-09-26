@@ -1,12 +1,13 @@
 # King IPTV Player
 
-> A free, ad-free IPTV player for Android (7.0+) by ZaPlatform. It plays the user's own M3U / M3U8 playlist or Xtream Codes login. It hosts and provides no content and is not affiliated with any IPTV provider.
+> A free, ad-free IPTV player for Android (7.0+), iPhone and iPad (iOS 17+) by ZaPlatform. It plays the user's own M3U / M3U8 playlist or Xtream Codes login. It hosts and provides no content and is not affiliated with any IPTV provider.
 
 - Google Play: https://play.google.com/store/apps/details?id=com.zaplatform.kingiptv
-- Features: Xtream Codes and M3U/M3U8 (link or file), several sources, live TV with now/next from the provider's EPG (XMLTV), films and series with resume, search, favourites per source, picture-in-picture, subtitle and audio track choice, ExoPlayer with automatic libVLC fallback, stream info panel.
-- Not included: channels or playlists, Chromecast, Android TV, catch-up, recording.
-- Privacy: no account, no analytics, no tracking, no server; credentials encrypted with an Android keystore key.
-- iPhone and iPad version: coming, not yet on the App Store.
+- App Store (iPhone and iPad): https://apps.apple.com/gb/app/king-iptv-player/id6807144978
+- Features: Xtream Codes and M3U/M3U8 (link or file), several sources, live TV with now/next from the provider's EPG (XMLTV), films and series with resume, search, favourites per source, picture-in-picture, subtitle and audio track choice, automatic libVLC fallback when the system player (ExoPlayer on Android, AVFoundation on iOS) cannot play a stream, stream info panel.
+- Not included: channels or playlists, catch-up, recording. Not available for Android TV or Chromecast.
+- Price: free on both stores, no ads, no in-app purchases.
+- Privacy: no account, no analytics, no tracking, no server; credentials encrypted with an Android keystore key or the iOS keychain.
 
 ## Pages
 - [Home and FAQ](https://kingiptv.zaplatform.com/)

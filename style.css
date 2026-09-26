@@ -1,3 +1,17 @@
+/* Inter, self-hosted (SIL OFL 1.1, see fonts/LICENSE.txt). Latin subset,
+   variable weight. Served from this origin so no visitor data reaches a
+   third-party font CDN. */
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(fonts/inter-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* King IPTV — the app's own tokens, so the site and the product match. */
 :root {
   --base: #0B0C0E;
@@ -5,7 +19,9 @@
   --accent: #FFB020;
   --text: #FFFFFF;
   --text-secondary: rgba(255, 255, 255, 0.64);
-  --text-tertiary: rgba(255, 255, 255, 0.40);
+  /* 0.56 keeps small print above the 4.5:1 WCAG AA contrast ratio on both
+     --base and --surface (0.40 measured about 3.8:1). */
+  --text-tertiary: rgba(255, 255, 255, 0.56);
   --hairline: rgba(255, 255, 255, 0.08);
   --radius-card: 12px;
   --radius-control: 8px;
@@ -122,7 +138,9 @@ img.mark { display: block; }
   border-radius: var(--radius-control); padding: 12px 18px;
 }
 .button:hover { text-decoration: none; filter: brightness(1.08); }
-.cta .note { margin: 0; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.button:focus-visible { outline-color: var(--text); }
+.cta .note { margin: 0; flex-basis: 100%; }
 
 .faq h3 { margin: 24px 0 6px; font-size: 15px; }
 .faq p { margin: 0; }
