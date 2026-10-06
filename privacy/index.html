@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — King IPTV Player</title>
-<meta name="description" content="King IPTV Player collects nothing. This policy explains what stays on your device and what leaves it.">
+<meta name="description" content="King IPTV Player collects only anonymous usage statistics through Firebase Analytics. This policy explains what stays on your device and what leaves it.">
 <link rel="canonical" href="https://kingiptv.zaplatform.com/privacy/">
 <meta name="theme-color" content="#0B0C0E">
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="King IPTV Player">
 <meta property="og:locale" content="en">
 <meta property="og:title" content="Privacy Policy — King IPTV Player">
-<meta property="og:description" content="King IPTV Player collects nothing. This policy explains what stays on your device and what leaves it.">
+<meta property="og:description" content="King IPTV Player collects only anonymous usage statistics through Firebase Analytics. This policy explains what stays on your device and what leaves it.">
 <meta property="og:url" content="https://kingiptv.zaplatform.com/privacy/">
 <meta property="og:image" content="https://kingiptv.zaplatform.com/og.png">
 <meta property="og:image:width" content="1024">
@@ -31,14 +31,17 @@
   <header>
     <div class="mark">K</div>
     <h1>Privacy Policy</h1>
-    <p class="lead">King IPTV Player · last updated 1 September 2026</p>
+    <p class="lead">King IPTV Player · last updated 7 October 2026</p>
   </header>
 
   <div class="card">
     <p style="margin:0">
-      <strong>We collect nothing.</strong> King IPTV Player has no accounts, no
-      analytics, no advertising, no crash reporting and no servers of our own.
-      Nothing you enter or watch is sent to ZaPlatform.
+      <strong>We collect only anonymous usage statistics.</strong> From version
+      1.1, King IPTV Player uses Google's Firebase Analytics to count which
+      screens are opened and whether streams play. There are no accounts, no
+      advertising, no advertising ID and no servers of our own. What you enter
+      and what you watch — logins, links, channel and title names — is never
+      sent to ZaPlatform or to Google.
     </p>
   </div>
 
@@ -55,7 +58,7 @@
     </tr>
     <tr>
       <td>Provider password</td>
-      <td>iOS keychain / Android keystore, encrypted by the system</td>
+      <td>iOS / macOS keychain or Android keystore, encrypted by the system</td>
     </tr>
     <tr>
       <td>Server address, username, playlist name</td>
@@ -78,8 +81,8 @@
 
   <h2>What leaves your device</h2>
   <p>
-    The app talks to exactly one kind of destination: <strong>the IPTV
-    provider you chose</strong>. When you add a source and browse or play,
+    The app talks to two kinds of destination: <strong>the IPTV provider you
+    chose</strong>, and <strong>Firebase Analytics</strong>. When you add a source and browse or play,
     your device contacts that provider directly to sign in, download the
     channel list, fetch channel artwork and stream video.
   </p>
@@ -87,6 +90,43 @@
     Those requests go to your provider's servers, not ours. Your provider can
     see them, and their own privacy policy governs what they do with that
     information. We have no visibility into it and no relationship with them.
+  </p>
+  <h3>Usage statistics (Firebase Analytics)</h3>
+  <p>
+    To find what breaks and what is used, the app sends Google's Firebase
+    Analytics a small set of anonymous events:
+  </p>
+  <table>
+    <tr>
+      <th>Event</th>
+      <th>What it contains</th>
+    </tr>
+    <tr>
+      <td>Screen viewed</td>
+      <td>The screen's name, such as “Live TV” or “Settings”</td>
+    </tr>
+    <tr>
+      <td>Source added</td>
+      <td>Its kind only: Xtream Codes, M3U link or M3U file</td>
+    </tr>
+    <tr>
+      <td>Playback started or failed</td>
+      <td>Live, film or series; which decoder was used; the platform; for a
+        failure, the decoder's error code</td>
+    </tr>
+  </table>
+  <p>
+    Firebase also records what it collects for every app: a random app
+    instance ID (not your advertising ID, which the app never reads), the
+    device model, operating system and app version, and a country or region
+    estimated from your IP address. It is not linked to your name, email or
+    provider account, and we do not use it for advertising. See
+    <a href="https://firebase.google.com/support/privacy">how Firebase handles
+    data</a>.
+  </p>
+  <p>
+    The app never sends server addresses, usernames, passwords, playlist or
+    stream links, or the names of channels, films, series or programmes.
   </p>
   <p>
     The app also loads the Inter and JetBrains Mono typefaces bundled inside
@@ -96,22 +136,25 @@
   <h2>Children</h2>
   <p>
     The app is not directed at children and collects no personal information
-    from anyone. Content comes from your provider, and we cannot see, filter or
+    from anyone — only the anonymous usage statistics described above. Content comes from your provider, and we cannot see, filter or
     rate it.
   </p>
 
   <h2>Third parties</h2>
   <p>
-    There are no third-party SDKs in the app: no analytics, no advertising
-    networks, no attribution or tracking frameworks. Nothing is shared with
-    anyone, because nothing is collected in the first place.
+    Firebase Analytics, provided by Google as our service provider, is the
+    only third-party SDK in the app. There are no advertising networks, no
+    attribution or cross-app tracking frameworks, and nothing is sold or
+    shared with anyone else.
   </p>
 
   <h2>Your rights</h2>
   <p>
-    Because we hold no data about you, there is nothing for us to export,
-    correct or delete. You control everything from the device: remove a source
-    to delete its credentials, or delete the app to remove all of it.
+    Everything you enter stays on the device: remove a source to delete its
+    credentials, or delete the app to remove all of it. The usage statistics
+    are anonymous and Google Analytics keeps them for at most 14 months; to have the
+    statistics tied to your app instance deleted, email us at the address
+    below.
   </p>
 
   <h2>Changes</h2>

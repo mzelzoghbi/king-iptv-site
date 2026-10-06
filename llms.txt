@@ -7,7 +7,7 @@
 - Features: Xtream Codes and M3U/M3U8 (link or file), several sources, live TV with now/next from the provider's EPG (XMLTV), films and series with resume, search, favourites per source, picture-in-picture, subtitle and audio track choice, automatic libVLC fallback when the system player (ExoPlayer on Android, AVFoundation on iOS) cannot play a stream, stream info panel.
 - Not included: channels or playlists, catch-up, recording. Not available for Android TV or Chromecast.
 - Price: free on both stores, no ads, no in-app purchases.
-- Privacy: no account, no analytics, no tracking, no server; credentials encrypted with an Android keystore key or the iOS keychain.
+- Privacy: no account, no ads, no advertising ID, no server of ours; only anonymous usage statistics via Firebase Analytics (screens opened, whether streams play — never logins, links or channel names); credentials encrypted with an Android keystore key or the iOS/macOS keychain.
 
 ## Pages
 - [Home and FAQ](https://kingiptv.zaplatform.com/)

@@ -112,7 +112,7 @@
         { "@type": "Question", "name": "Which devices does King IPTV Player run on?",
           "acceptedAnswer": { "@type": "Answer", "text": "Android phones and tablets running Android 7.0 or later, and iPhones and iPads running iOS 17 or later." } },
         { "@type": "Question", "name": "Does King IPTV Player collect my data?",
-          "acceptedAnswer": { "@type": "Answer", "text": "No. Your provider password is encrypted on the device, with an Android keystore key or the iOS keychain, and is sent only to the server you entered. There is no account, no analytics, no tracking and no server of ours." } },
+          "acceptedAnswer": { "@type": "Answer", "text": "Only anonymous usage statistics: which screens are opened and whether a stream played, through Firebase Analytics. Never your logins, links or channel names. Your provider password is encrypted on the device, with an Android keystore key or the iOS keychain, and is sent only to the server you entered. There is no account, no advertising ID and no server of ours." } },
         { "@type": "Question", "name": "Why won't a channel play in King IPTV Player?",
           "acceptedAnswer": { "@type": "Answer", "text": "The app first tries the system player (ExoPlayer on Android, AVFoundation on iOS) and switches to libVLC automatically if a stream fails. If it still won't play, open Stream info in the player: it shows what the server actually sent, which usually tells you whether the problem is the app, your network or the provider." } }
       ]
@@ -666,8 +666,10 @@ footer a:hover { color: var(--text); }
         </details>
         <details>
           <summary>Does it collect my data?</summary>
-          <p>No. Your provider password is encrypted on the device and sent only to the server you
-             entered. There is no account and no server of ours. See the <a href="privacy/">privacy policy</a>.</p>
+          <p>Only anonymous usage statistics: which screens are opened and whether a stream played,
+             through Firebase Analytics. Never your logins, links or channel names. Your provider
+             password is encrypted on the device and sent only to the server you entered. There is no
+             account, no advertising ID and no server of ours. See the <a href="privacy/">privacy policy</a>.</p>
         </details>
         <details>
           <summary>Why won't a channel play?</summary>
